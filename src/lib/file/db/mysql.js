@@ -13,6 +13,7 @@ export function mysqlconnFn() {
     // });
     mysqlconn = mysql.createConnection({
       host: "monorail.proxy.rlwy.net",
+      port: "19429",
       user: "root",
       password: "iaXlXybypJksPnGUJyncdEazKbPnkrJA",
       database: "auth_system",

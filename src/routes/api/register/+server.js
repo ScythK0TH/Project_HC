@@ -1,12 +1,12 @@
 import { json } from "@sveltejs/kit";
 import { mysqlconnFn } from "$lib/file/db/mysql.js";
-import bcrypt from "bcrypt";
+import md5 from "md5";
 
 let expirationDays = 7;
 
 export async function POST({ cookies, request }) {
   const { username, password } = await request.json();
-  let password1 = await bcrypt.hash(password.trim(), 10);
+  let password1 = await md5(password.trim());
   let username1 = username.trim();
   let mysqlconn = await mysqlconnFn();
   const expiresdate = new Date();

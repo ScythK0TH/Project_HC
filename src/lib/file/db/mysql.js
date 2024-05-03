@@ -6,15 +6,15 @@ export function mysqlconnFn() {
   if (!mysqlconn) {
     // used for development with MAMP
     // mysqlconn = mysql.createConnection({
-    //   host: "127.0.0.1",
+    //   host: "localhost",
     //   user: "root",
     //   password: "",
-    //   database: "statedata",
+    //   database: "auth_system",
     // });
     mysqlconn = mysql.createConnection({
-      host: "localhost",
+      host: "monorail.proxy.rlwy.net",
       user: "root",
-      password: "",
+      password: "iaXlXybypJksPnGUJyncdEazKbPnkrJA",
       database: "auth_system",
     });
   }

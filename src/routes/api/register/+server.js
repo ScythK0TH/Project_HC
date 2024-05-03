@@ -18,7 +18,6 @@ export async function POST({ cookies, request }) {
         console.log(err);
         return err;
       } else {
-        cookies.set('user', username1, { path: '/', expires: expiresdate });
         console.log(rows);
         return rows;
       }

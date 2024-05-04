@@ -11,7 +11,6 @@
 	</main>
 
 	<footer>
-		<p1 style="color: white;">Copyright © 2024 CS-Salty Inc. สงวนสิทธิ์ทุกประการ</p1>
 	</footer>
 
 </div>
@@ -40,9 +39,9 @@
 		padding: 12px;
 	}
 
-	footer a {
+	/* footer a {
 		font-weight: bold;
-	}
+	} */
 
 	@media (min-width: 480px) {
 		footer {

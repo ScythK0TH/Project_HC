@@ -1,67 +1,93 @@
 <script>
 	import { page } from '$app/stores';
-    import logo from '$lib/file/icon/icon.svg';
+    import logo from '$lib/file/icon/contact.svg';
 	import viewport from './useViewportAction.js';
+	import { enhance } from "$app/forms";
 
+	export let data2;
 	let hiddench = "";
     let scrollY = 0;
     $: pathId = $page.route.id;
 
-    function login() {
-        return 0
-    }
-
-    function register() {
-        return 0
-    }
-
 </script>
-
+<!-- <hr class="vertical-line" style="height: 1px; border: none; transform: rotate(90deg); background-color: green; z-index: 100" />
+<hr class="horizontal-line" style="position: absolute; top: 50%; height: 1px; width: 100%; border-collapse: collapse; border: none; background-color: green; z-index: 100 " /> -->
 <header class="sticky top-0">
+	
 	<div class="absolute left-0 corner">
-		<a href="https://kit.svelte.dev">
+		<a href="/contact">
             <img src={logo} alt="Organizer"/>
 		</a>
 	</div>
 
 	<nav>
-		<svg class="smx" viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-            <li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-                <a href="/about" class="text-[2.25vh]" class:active={pathId === "/about"}>About</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/" class="text-[2.25vh]" class:active={pathId == "/"}>Home</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/contact') ? 'page' : undefined}>
-				<a href="/contact" class="text-[2.25vh]" class:active={pathId == "/contact"}>Contact</a>
-			</li>
-		</ul>
-		<svg class="smx" viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
+        <svg class="smx" viewBox="0 0 2 3" aria-hidden="true">
+            <path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
+        </svg>
+        <ul>
+            <li aria-current={$page.url.pathname === '/store/Ferrari' ? 'page' : undefined}>
+                <a href="/store/Ferrari" class="text-[2.25vh]" class:active={pathId === "/store/Ferrari" || pathId === "/store/Bugatti" || pathId === "/store/Porsche"}>Shop</a>
+            </li>
+            <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+                <a href="/" class="text-[2.25vh]" class:active={pathId == "/"}>Home</a>
+            </li>
+            <li aria-current={$page.url.pathname.startsWith('/cart') ? 'page' : undefined}>
+                <a href="/cart" class="text-[2.25vh]" class:active={pathId == "/cart"}>Cart</a>
+            </li>
+        </ul>
+        <svg class="smx" viewBox="0 0 2 3" aria-hidden="true">
+            <path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
+        </svg>
+    </nav>
 
     <div class="absolute right-0">
         <nav class="auth01">
             <svg class="smx" viewBox="0 0 2 3" aria-hidden="true">
                 <path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
             </svg>
-            <ul>
-                <li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
-					<a href="/login" class="text-[2.25vh]" class:active={pathId === "/login"}>Login</a>
-				</li>
-                <li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
-					<a href="/register" class="text-[2.25vh]" class:active={pathId === "/register"}>Register</a>
-				</li>
-            </ul>
+			<!-- {#await data2 then} -->
+				{#if !data2?.user}
+					<ul>
+						<li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
+							<a href="/login" class="text-[2.25vh]" class:active={pathId === '/login'}>Login</a>
+						</li>
+						<li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
+							<a href="/register" class="text-[2.25vh]" class:active={pathId === '/register'}>Register</a>
+						</li>
+					</ul>
+			 
+				{:else}
+				<ul>
+					<li>
+						<a href = "/" class="text-[2.25vh]">{data2?.user}</a>
+					</li>
+				</ul>
+				<form action="/logout" method="Post" use:enhance>
+					<button name = "logout" class="text-[2.25vh] logout">Logout	</button>
+				</form>
+				{/if}
+			<!-- {/await} -->
         </nav>
     </div>
 </header>
 
 <style>
+	.logout{
+		display: flex;
+		height: 100%;
+		align-items: center;
+		padding: 0 3.5rem;
+		color: var(--color-text);
+		font-family: 'Kode Mono', monospace;
+		color: white;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		border-bottom: 3px solid transparent;
+		-webkit-transition: ease 0.4s;
+		background-color: rgb(0, 0, 0, 0.7)	}
+
 	header {
 		display: flex;
 		justify-content: center;
@@ -98,12 +124,6 @@
 		height: 3em;
 		display: block;
 	}
-
-    svg.lmx{
-        width: 2.75em;
-        height: 8em;
-        display: block;
-    }
 
 	path {
 		fill: var(--background);
@@ -172,7 +192,7 @@
 		height: 100%;
 		align-items: center;
 		padding: 0 1.5rem;
-		color: var(--color-text);
+		
         font-family: "Kode Mono", monospace;
         color: white;
 		font-weight: 700;
@@ -184,10 +204,6 @@
 	}
 
     nav button:hover{
-        border-bottom: 3px solid red;
-    }
-
-    nav button.active{
         border-bottom: 3px solid red;
     }
 

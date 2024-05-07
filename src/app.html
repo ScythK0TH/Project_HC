@@ -36,6 +36,28 @@
 			opacity: 1;
 			filter: brightness(100%) blur(0);
 		}
+		.hiddencheck3 {
+			opacity: 0;
+			filter: brightness(0%) blur(5px);
+		}
+		.showcheck3 {
+			opacity: 1;
+			filter: brightness(100%) blur(0);
+		}
+		.mySlides {
+			display: none;
+		}
+		.show {
+			display: block;
+		}
+		.fade {
+			animation-name: fade;
+			animation-duration: 1.5s;
+		}
+		@keyframes fade {
+			from {opacity: 0} 
+			to {opacity: 1}
+		}
 	</style>
 	<head>
 		<meta charset="utf-8" />

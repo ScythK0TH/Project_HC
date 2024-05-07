@@ -13,7 +13,7 @@
 	<title>Contact Hypecar</title>
 </svelte:head>
 
-<body>
+<div class="main-body">
     <!-- svelte-ignore a11y-missing-content -->
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<div class="container1">
@@ -176,12 +176,12 @@
 			</div>
 		</section>
 	</div>
-</body>
+</div>
 
 <style>
 	@import url(https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap);
 
-	body {
+	.main-body {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
@@ -197,23 +197,8 @@
 	section {
 		height: 100vh;
         padding-top: 5vh;
-		scroll-snap-align: center;
 	}
 
-	.container1 {
-		margin-top: 2vh;
-		scroll-snap-type: y mandatory;
-		overflow-y: scroll;
-		height: 100vh;
-	}
-
-	*,
-	*::before,
-	*::after {
-		margin: 0;
-		padding: 0;
-		box-sizing: inherit;
-	}
 	.container1 .name {
 		display: flex;
 		justify-content: center;
@@ -226,6 +211,7 @@
 		align-items: center;
 		height: 5vh;
 	}
+
 	#intro {
 		display: block;
 		margin-left: auto;

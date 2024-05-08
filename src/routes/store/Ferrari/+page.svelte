@@ -11,8 +11,6 @@
 
 	$: imagesA = data.resultArray;
 
-	let pathIMG = "/src/lib/file/images/";
-
 	let imageShowIndex = 0;
 	//$: console.log(imageShowIndex);
 	//เปลี่ยนชื่อภาพเมื่อกดคลิก
@@ -77,7 +75,7 @@
 <div class="ss-container">
 	{#each imagesA as { imageid, img }}
 		<div class="mySlides fade" class:show={imageid === imageShowIndex}>
-			<img src={pathIMG}{img} />
+			<img src={img} />
 			<!-- เลื่อนหน้าหลัง -->
 		</div>
 		<!-- <p class="mySlides numbertext" class:show={imageid === imageShowIndex}>

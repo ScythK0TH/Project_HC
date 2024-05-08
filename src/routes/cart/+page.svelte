@@ -5,7 +5,6 @@
 
     $: imagesA = data.resultArray;
     let imageShowIndex = 0;
-	let pathIMG = "/src/lib/file/images/";
 </script>
 
 <div id="title">
@@ -23,7 +22,7 @@
 
             <td>
                 <!-- svelte-ignore a11y-missing-attribute -->
-                <img src={pathIMG}{img} />
+                <img src={img} />
             </td>
             <td id="text">
                 <p>{name}</p>

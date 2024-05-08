@@ -10,8 +10,6 @@
 
 	$:pathId = $page.route.id;
 
-	let pathIMG = "/src/lib/file/images/";
-
 	$:imagesA = data.resultArray;
 
 	let imageShowIndex = 0;
@@ -79,7 +77,7 @@
 		<div class="mySlides fade" class:show={imageid === imageShowIndex}>
 			<!-- <Caption on:prevClick={prevSlide} on:nextClick={nextSlide} /> -->
 			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src={pathIMG}{img} />
+			<img src={img} />
 			<!-- เลื่อนหน้าหลัง -->
 		</div>
 		<!-- <p class="mySlides numbertext" class:show={imageid === imageShowIndex}>

@@ -38,3 +38,13 @@ model products {
   manufact    String
   stock       Int
 }
+
+model history {
+  id        Int         @id   @default(autoincrement())
+  uid       String
+  pid       Int
+  pcolor    String
+  quantity  Int
+  price     Int
+  BuyAt     DateTime @default(now())
+}

@@ -13,6 +13,9 @@
 	export let data;
 
 	let imagesA = data.resultArray;
+	let img1 = "/src/lib/file/images/"+imagesA[0].img;
+	let img2 = "/src/lib/file/images/"+imagesA[1].img;
+	let img3 = "/src/lib/file/images/"+imagesA[2].img;
 
 	// @ts-ignore
 	let index, offset, progress;
@@ -162,19 +165,19 @@
 	<a
 		href="store/{imagesA[1].manufact}"
 		class="box box-1"
-		style="--img: url({imagesA[1].img});"
+		style="--img: url({img2});"
 		data-text="#2 Best Seller {imagesA[1].name}"
 	></a>
 	<a
 		href="store/{imagesA[0].manufact}"
 		class="box box-2"
-		style="--img: url({imagesA[0].img});"
+		style="--img: url({img1});"
 		data-text="#1 Best Seller {imagesA[0].name}"
 	></a>
 	<a
 		href="store/{imagesA[2].manufact}"
 		class="box box-3"
-		style="--img: url({imagesA[2].img});"
+		style="--img: url({img3});"
 		data-text="#3 Best Seller {imagesA[2].name}"
 	></a>
 </div>

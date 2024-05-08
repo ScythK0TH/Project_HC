@@ -5,11 +5,11 @@
 
     $: imagesA = data.resultArray;
     let imageShowIndex = 0;
-    $: Product = imagesA[imageShowIndex];
+	let pathIMG = "/src/lib/file/images/";
 </script>
 
 <div id="title">
-    <h3 style="padding-top: 5vh; color: White; font-size:7vh">CART</h3>
+    <h3 style="padding-top: 5vh; color: White; font-size:7vh;">MY CART</h3>
 </div>
 
 <table style="position:relative;" class="klang">
@@ -23,7 +23,7 @@
 
             <td>
                 <!-- svelte-ignore a11y-missing-attribute -->
-                <img src={img} />
+                <img src={pathIMG}{img} />
             </td>
             <td id="text">
                 <p>{name}</p>

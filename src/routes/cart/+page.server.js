@@ -2,7 +2,7 @@ import prisma from '$lib/prisma';
 import { error, fail, redirect } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ request, cookies }) {
+export async function load({ cookies }) {
     let user_id = await cookies.get('userId');
     let username = await cookies.get('user')
     if (!username) {
@@ -40,20 +40,26 @@ export const actions = {
             }
         }
         if (quantity == 1) {
-
-            const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
-            if (deletion) {
-                try {
-                    const deleting = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock + 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-                } catch (e) {
-                    const deleting = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock + 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
+            try{
+                const deleting = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock + 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
+                if (deleting) {
+                    const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
+                } else {
+                    return fail(400, {
+                        error: "Something went wrong"
+                    })
                 }
-                return redirect(302, "/cart");
-            } else {
-                return fail(400, {
-                    error: "Something went wrong"
-                })
+            } catch (e) {
+                const deleting = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock + 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
+                if (deleting) {
+                    const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
+                } else {
+                    return fail(400, {
+                        error: "Something went wrong"
+                    })
+                }
             }
+            return redirect(302, "/cart");
         }
     }
 }

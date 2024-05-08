@@ -34,6 +34,7 @@
 		"@prisma/client": "^5.13.0",
 		"@sveltejs/svelte-scroller": "^2.0.7",
 		"bcrypt": "^5.1.1",
+		"dotenv": "^16.4.5",
 		"md5": "^2.3.0",
 		"mysql2": "^3.9.7"
 	}

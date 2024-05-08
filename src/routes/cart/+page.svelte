@@ -8,7 +8,7 @@
 </script>
 
 <div id="title">
-	<h3 style="padding-top: 5vh; color: White; font-size:7vh;">MY CART</h3>
+	<h3 style="padding-top: 5vh; color: White; font-size:7vh; text-shadow: 0 0 1vh white;">MY CART</h3>
 </div>
 
 <table style="position:relative;" class="klang">

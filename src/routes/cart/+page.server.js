@@ -64,7 +64,9 @@ export const actions = {
                 }
             }
             const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id}`
-            return redirect(302, "/cart");
+            if (deletion){
+                return redirect(302, "/cart");
+            }
         } else {
             return fail(400, {
                 error: "Something went wrong"

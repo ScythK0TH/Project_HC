@@ -4,19 +4,19 @@
 	import { enhance } from '$app/forms';
 
 	export let data2 = [];
-	let ui_switch = 'hidden';
+	let ui_switch = 'fadeOut';
 	$: pathId = $page.route.id;
 	$: historyArray = data2.historyArray;
 
 	function account_ui() {
-		if (ui_switch == 'hidden') {
-			ui_switch = '';
+		if (ui_switch == 'fadeOut') {
+			ui_switch = 'fadeIn';
 		} else {
-			ui_switch = 'hidden';
+			ui_switch = 'fadeOut';
 		}
 	}
 	function account_uiD() {
-		ui_switch = 'hidden';
+		ui_switch = 'fadeOut';
 	}
 </script>
 
@@ -83,11 +83,7 @@
 			{:else}
 				<ul>
 					<li>
-						<a
-							href="/"
-							class="text-[2.25vh]"
-							on:click={account_ui}>{data2?.user}</a
-						>
+						<a href="/" class="text-[2.25vh]" on:click={account_ui}>{data2?.user}</a>
 					</li>
 				</ul>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -108,19 +104,23 @@
 		class="mt-[25vh] h-[60vh] w-[90vh] m-auto z-10"
 		style="background-color: black; border: solid white; box-shadow: 0 0 1.5vh white; border-radius: 2vh;"
 	>
-		<p style="color: white; font-size: 7vh; text-align: center; margin-bottom: 2vh;">ACCOUNT</p>
+		<p
+			style="color: white; font-size: 7vh; text-align: center; margin-bottom: 2vh; text-shadow: 0 0 1vh white;"
+		>
+			ACCOUNT
+		</p>
 		<p style="color: white; font-size: 3vh; text-align: center; padding-bottom: 2vh;">
-			[<span style="color: cyan">USER</span>] {data2?.user}
+			[<span style="color: red">USER</span>] {data2?.user}
 		</p>
 		{#if data2?.historyArray != 0}
 			<p style="color: white; font-size: 5vh; text-align: center; padding-bottom: 2vh;">HISTORY</p>
-			<table id="history_table" class="m-auto" style="color: white;">
+			<table id="history_table" class="m-auto w-full" style="color: white;">
 				<tr><th>NAME</th><th>COLOR</th><th>QTY</th><th>PRICE</th><th>DATE</th></tr>
-				{#each historyArray as { username, pcolor, quantity, price, BuyAt }}
+				{#each historyArray as { name, pcolor, quantity, price, BuyAt }}
 					<tr
-						><td>{username}</td><td>{pcolor}</td><td>{quantity}</td><td
+						><td>{name}</td><td>{pcolor}</td><td>{quantity}</td><td
 							>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td
-						><td>{BuyAt}</td></tr
+						><td>{BuyAt.toGMTString()}</td></tr
 					>
 				{/each}
 			</table>
@@ -134,23 +134,26 @@
 
 <style>
 	#history_table th {
-		background-color: rgb(43, 43, 43);
+		background-image: linear-gradient(rgb(48, 48, 48), rgb(22, 22, 22));
 	}
 	#history_table td {
-		background-color: rgb(73, 73, 73);
-		padding: 0.7vh;
+		text-align: center;
+		padding: 0.65vh;
 	}
-	#account_UI {
-		animation-name: fade;
-		animation-duration: 0.5s;
+	#history_table{
+		background-image: linear-gradient(rgb(22,22,22), black);
 	}
-	@keyframes fade {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
+	.fadeOut {
+		visibility: hidden;
+		opacity: 0;
+		filter: blur(10px);
+		transition: all 0.5s
+	}
+	.fadeIn {
+		visibility: visible;
+		opacity: 1;
+		filter: blur(0px);
+		transition: all 0.5s;
 	}
 	.overlay {
 		position: fixed;
@@ -158,7 +161,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.7);
+		background-color: rgba(0, 0, 0, 0.863);
 		z-index: -1;
 	}
 	#AUI {

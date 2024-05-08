@@ -4,7 +4,7 @@ import { redirect } from '@sveltejs/kit';
 export async function load({ cookies }) {
 	const user = cookies.get('user');
 	const userId = cookies.get('userId');
-	const historyArray = await prisma.$queryRaw`SELECT * FROM history INNER JOIN users ON history.uid = users.id WHERE history.uid = ${userId} ORDER BY history."BuyAt" DESC LIMIT 7`
+	const historyArray = await prisma.$queryRaw`SELECT * FROM ((history INNER JOIN users ON history.uid = users.id) INNER JOIN products ON history.pid = products.id) WHERE history.uid = ${userId} ORDER BY history."BuyAt" DESC LIMIT 7`
 	if (!historyArray) {
 		let expiresdate = new Date();
 		expiresdate.setDate(expiresdate.getDate() - 10000); // Set expiration date to the past to clear the cookie

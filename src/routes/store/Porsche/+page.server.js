@@ -15,9 +15,9 @@ export const actions = {
     if (!username) {
       return redirect(302, "/login");
     }
-    if (Object.keys(check_login).length <= 0){
+    if (Object.keys(check_login).length <= 0) {
       let expiresdate = new Date();
-      expiresdate.setDate(expiresdate.getDate() - 10000); // Set expiration date to the past to clear the cookie
+      expiresdate.setDate(expiresdate.getDate() - 10000);
       cookies.set('user', '', { path: '/', expires: expiresdate });
       cookies.set('userId', '', { path: '/', expires: expiresdate });
 
@@ -30,33 +30,15 @@ export const actions = {
     }
 
     const results = await prisma.$queryRaw`SELECT * FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1} ORDER BY cid;`
-    // console.log(results);
+
     if (Object.keys(results).length > 0) {
-      // มีสินค้าอยู่ในตะกร้าแล้ว อัพเดทจำนวนสินค้า
+
       const add_cart = await prisma.$queryRaw`UPDATE carts SET quantity = quantity + 1 WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
-      // ลดค่าในคลังสินค้า (catalog) ตามจำนวนที่เพิ่มในตะกร้า
-      if (add_cart) {
-        try {
-          const update = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock - 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-        } catch (e) {
-          const update = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock - 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-        }
-      } else {
-        return fail(400, { error: true, message: "Sorry, this car is out of stock" });
-      }
 
     } else if (Object.keys(results).length == 0) {
+      
       const add_cart = await prisma.$queryRaw`INSERT INTO carts (id, pid, pcolor, quantity) VALUES (${user_id}, ${pro_id1}, ${pcolor1}, ${quantity})`
-        // ลดค่าในคลังสินค้า (catalog) ตามจำนวนที่เพิ่มในตะกร้า
-      if (add_cart) {
-        try {
-          const update = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock - 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-        } catch (e) {
-          const update = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock - 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-        }
-      } else {
-        return fail(400, { error: true, message: "Sorry, this car is out of stock" });
-      }
+
     } else {
       const check_catalog = await prisma.$queryRaw`SELECT * FROM products ORDER BY id;`
       console.log(check_catalog);

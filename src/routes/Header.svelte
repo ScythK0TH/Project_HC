@@ -106,7 +106,7 @@
 	<div
 		id="AUI"
 		class="mt-[25vh] h-[60vh] w-[90vh] m-auto z-10"
-		style="background-color: black; border: solid white; border-radius: 2vh;"
+		style="background-color: black; border: solid white; box-shadow: 0 0 1.5vh white; border-radius: 2vh;"
 	>
 		<p style="color: white; font-size: 7vh; text-align: center; margin-bottom: 2vh;">ACCOUNT</p>
 		<p style="color: white; font-size: 3vh; text-align: center; padding-bottom: 2vh;">

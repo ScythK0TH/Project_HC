@@ -1,4 +1,5 @@
 import prisma from '$lib/prisma';
+import { Prisma } from '@prisma/client'
 import { error, fail, redirect } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
@@ -24,41 +25,11 @@ export const actions = {
         const results = await prisma.$queryRaw`SELECT quantity FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
         let quantity = results[0].quantity;
         if (quantity > 1) {
-
             const deletion = await prisma.$queryRaw`UPDATE carts SET quantity = quantity - 1 WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
-            if (deletion) {
-                try {
-                    const deleting = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock + 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-                } catch (e) {
-                    const deleting = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock + 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-                }
-                return redirect(302, "/cart");
-            } else {
-                return fail(400, {
-                    error: "Something went wrong"
-                })
-            }
+            return redirect(302, "/cart");
         }
         if (quantity == 1) {
-            try {
-                const deleting = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock + 1 WHERE c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-                if (deleting) {
-                    const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
-                } else {
-                    return fail(400, {
-                        error: "Something went wrong"
-                    })
-                }
-            } catch (e) {
-                const deleting = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock + 1 FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pro_id1} AND c.pcolor = ${pcolor1}`
-                if (deleting) {
-                    const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
-                } else {
-                    return fail(400, {
-                        error: "Something went wrong"
-                    })
-                }
-            }
+            const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pro_id1} AND pcolor = ${pcolor1}`
             return redirect(302, "/cart");
         }
     },
@@ -72,12 +43,28 @@ export const actions = {
                 let pcolor1 = results[i].pcolor;
                 let quantity1 = results[i].quantity;
 
-                const price1 = await prisma.$queryRaw`SELECT price FROM products WHERE id = ${pid1}`
-                let price2 = price1[0].price;
-                await prisma.$queryRaw`INSERT INTO history (uid, pid, pcolor, quantity, price) VALUES (${uid1}, ${pid1}, ${pcolor1}, ${quantity1}, ${price2*quantity1})`
+                const product = await prisma.$queryRaw`SELECT * FROM products WHERE id = ${pid1}`
+                let price1 = product[0].price;
+                if (product[0].stock < quantity1){
+                    const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pid1} AND pcolor = ${pcolor1}`
+                } else if (product[0].stock >= quantity1){
+                    try {
+                        const update = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock - ${quantity1} WHERE c.id = ${user_id} AND c.pid = ${pid1} AND c.pcolor = ${pcolor1}`
+                        const inserting = await prisma.$queryRaw`INSERT INTO history (uid, pid, pcolor, quantity, price) VALUES (${uid1}, ${pid1}, ${pcolor1}, ${quantity1}, ${price2 * quantity1})`
+                    } catch (e) {
+                        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+                            if (e.code === 'P2010') {
+                                const update = await prisma.$queryRaw`UPDATE products AS p SET stock = p.stock - ${quantity1} FROM carts AS c WHERE p.id = c.pid AND c.id = ${user_id} AND c.pid = ${pid1} AND c.pcolor = ${pcolor1}`
+                                const inserting = await prisma.$queryRaw`INSERT INTO history (uid, pid, pcolor, quantity, price) VALUES (${uid1}, ${pid1}, ${pcolor1}, ${quantity1}, ${price1 * quantity1})`
+                            } else {
+                                const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id} AND pid = ${pid1} AND pcolor = ${pcolor1}`
+                            }
+                        }
+                    }
+                }
             }
             const deletion = await prisma.$queryRaw`DELETE FROM carts WHERE id = ${user_id}`
-            redirect(302, "/cart");
+            return redirect(302, "/cart");
         } else {
             return fail(400, {
                 error: "Something went wrong"

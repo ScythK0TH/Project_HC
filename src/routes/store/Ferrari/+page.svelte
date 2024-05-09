@@ -11,11 +11,15 @@
 
 	$: imagesA = data.resultArray;
 
+	$: colorAll = data.colorsArray;
+
 	let imageShowIndex = 0;
 	//$: console.log(imageShowIndex);
 	//เปลี่ยนชื่อภาพเมื่อกดคลิก
 
 	$: Product = imagesA[imageShowIndex];
+
+	$: colorsA = colorAll.filter(function(user){ return user.pid === (Product.id); });
 	//การตั่งตัวแปรเมื่อมีการเปลี่ยนทุกรอบหรือมันคือตัวเปลี่ยนแปลงเมื่อมี action
 	//$: console.log(Product.pid)
 
@@ -75,6 +79,7 @@
 <div class="ss-container">
 	{#each imagesA as { imageid, img }}
 		<div class="mySlides fade" class:show={imageid === imageShowIndex}>
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<img src={img} />
 			<!-- เลื่อนหน้าหลัง -->
 		</div>
@@ -92,74 +97,16 @@
 
 			<div style="padding-top: 2vh; padding-bottom: 2vh;" class="container">
 				<div class="line"></div>
-				<label class="label" for="alien">
-					<input id="alien" type="radio" name="pcolor" value="Red" on:click={resetCount} required />
-					<div class="button" id="red">
+				{#each colorsA as colors }
+				<label class="label" for="{colors.pcolor}Label">
+					<input id="{colors.pcolor}Label" type="radio" name="pcolor" value="{colors.pcolor}" on:click={resetCount} required />
+					<div class="button" id="{colors.pcolor}">
 						<span class="shadow"></span>
 						<span class="edge"></span>
 						<span class="front text"></span>
 					</div>
 				</label>
-				<label class="label" for="bear">
-					<input
-						id="bear"
-						type="radio"
-						name="pcolor"
-						value="Green"
-						on:click={resetCount}
-						required
-					/>
-					<div class="button" id="green">
-						<span class="shadow"></span>
-						<span class="edge"></span>
-						<span class="front text"></span>
-					</div>
-				</label>
-				<label class="label" for="mickey">
-					<input
-						id="mickey"
-						type="radio"
-						name="pcolor"
-						value="Blue"
-						on:click={resetCount}
-						required
-					/>
-					<div class="button" id="blue">
-						<span class="shadow"></span>
-						<span class="edge"></span>
-						<span class="front text"></span>
-					</div>
-				</label>
-				<label class="label" for="white">
-					<input
-						id="white"
-						type="radio"
-						name="pcolor"
-						value="White"
-						on:click={resetCount}
-						required
-					/>
-					<div class="button" id="White">
-						<span class="shadow"></span>
-						<span class="edge"></span>
-						<span class="front text"></span>
-					</div>
-				</label>
-				<label class="label" for="black">
-					<input
-						id="black"
-						type="radio"
-						name="pcolor"
-						value="Black"
-						on:click={resetCount}
-						required
-					/>
-					<div class="button" id="Black">
-						<span class="shadow"></span>
-						<span class="edge"></span>
-						<span class="front text"></span>
-					</div>
-				</label>
+				{/each}
 			</div>
 			<button type="submit" style="color: white;" {IsDisabled}>Add to cart</button><br />
 			{#if imagesA[imageShowIndex].stock == 0}<p style="color: red">Sorry Out Of Stock</p>{:else}<p>
@@ -348,7 +295,67 @@
 		margin: 0 10px;
 		cursor: pointer;
 	}
-	#red {
+	#Purple {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, purple 0%, purple 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Orange {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, orange 0%, orange 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Gold {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, gold 0%, gold 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Silver {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, silver 0%, silver 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Yellow {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, yellow 0%, yellow 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Red {
 		position: relative;
 		display: flex;
 		justify-content: center;
@@ -360,7 +367,7 @@
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 		transition: all 0.3s ease;
 	}
-	#green {
+	#Green {
 		position: relative;
 		display: flex;
 		justify-content: center;
@@ -372,7 +379,7 @@
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 		transition: all 0.3s ease;
 	}
-	#blue {
+	#Blue {
 		position: relative;
 		display: flex;
 		justify-content: center;

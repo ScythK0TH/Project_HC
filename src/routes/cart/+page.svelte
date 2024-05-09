@@ -124,6 +124,66 @@
 		transition: all 0.5s;
 	}
 
+	#Purple {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, purple 0%, purple 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Orange {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, orange 0%, orange 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Gold {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, gold 0%, gold 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Silver {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, silver 0%, silver 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+	#Yellow {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, yellow 0%, yellow 100%);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
 	#White {
 		position: relative;
 		display: flex;

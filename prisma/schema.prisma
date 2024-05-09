@@ -48,3 +48,9 @@ model history {
   price     Int
   BuyAt     DateTime @default(now())
 }
+
+model product_colors {
+  id        Int         @id   @default(autoincrement())
+  pid       Int
+  pcolor    String
+}

@@ -50,10 +50,11 @@ export const actions = {
 export async function load() {
   let manufact1 = "Bugatti";
   const results = await prisma.$queryRaw`SELECT * FROM products WHERE manufact = ${manufact1} ORDER BY id;`
+  const colors = await prisma.$queryRaw`SELECT * FROM product_colors`
   if (Object.keys(results).length <= 0) {
     return error(404, "Nothing Here");
   }
-  return { resultArray: results }
+  return { resultArray: results, colorsArray: colors }
 }
 
 

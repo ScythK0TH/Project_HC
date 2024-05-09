@@ -50,7 +50,7 @@ export const actions = {
                 } else if (product[0].stock >= quantity1){
                     try {
                         const update = await prisma.$queryRaw`UPDATE products AS p INNER JOIN carts AS c ON p.id = c.pid SET p.stock = p.stock - ${quantity1} WHERE c.id = ${user_id} AND c.pid = ${pid1} AND c.pcolor = ${pcolor1}`
-                        const inserting = await prisma.$queryRaw`INSERT INTO history (uid, pid, pcolor, quantity, price) VALUES (${uid1}, ${pid1}, ${pcolor1}, ${quantity1}, ${price2 * quantity1})`
+                        const inserting = await prisma.$queryRaw`INSERT INTO history (uid, pid, pcolor, quantity, price) VALUES (${uid1}, ${pid1}, ${pcolor1}, ${quantity1}, ${price1 * quantity1})`
                     } catch (e) {
                         if (e instanceof Prisma.PrismaClientKnownRequestError) {
                             if (e.code === 'P2010') {

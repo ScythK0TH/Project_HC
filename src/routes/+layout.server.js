@@ -7,11 +7,11 @@ export async function load({ cookies }) {
 	const userId = cookies.get('userId');
 	let historyArray;
 	try {
-		historyArray = await prisma.$queryRaw`SELECT * FROM ((history INNER JOIN users ON history.uid = users.id) INNER JOIN products ON history.pid = products.id) WHERE history.uid = ${userId} ORDER BY history."BuyAt" DESC LIMIT 7`
+		historyArray = await prisma.$queryRaw`SELECT products.name, history.pcolor, history.quantity, history.price, history."BuyAt" FROM ((history INNER JOIN users ON history.uid = users.id) INNER JOIN products ON history.pid = products.id) WHERE history.uid = ${userId} ORDER BY history."BuyAt" DESC LIMIT 7`
 	} catch (e) {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code === "P2010"){
-				historyArray = await prisma.$queryRaw`SELECT * FROM ((history INNER JOIN users ON history.uid = users.id) INNER JOIN products ON history.pid = products.id) WHERE history.uid = ${userId} ORDER BY history.BuyAt DESC LIMIT 7`
+				historyArray = await prisma.$queryRaw`SELECT products.name, history.pcolor, history.quantity, history.price, history.BuyAt FROM ((history INNER JOIN users ON history.uid = users.id) INNER JOIN products ON history.pid = products.id) WHERE history.uid = ${userId} ORDER BY history.BuyAt DESC LIMIT 7`
 			}
 		}
 	}

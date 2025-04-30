@@ -21,7 +21,7 @@ model users {
 }
 
 model carts {
-  cid       BigInt         @id   @default(autoincrement())
+  cid       BigInt         @id   @default(autoincrement() || sequence())
   id        String
   pid       Int
   pcolor    String
@@ -40,7 +40,7 @@ model products {
 }
 
 model history {
-  id        Int         @id   @default(autoincrement())
+  id        Int         @id   @default(autoincrement() || sequence())
   uid       String
   pid       Int
   pcolor    String
@@ -50,7 +50,7 @@ model history {
 }
 
 model product_colors {
-  id        Int         @id   @default(autoincrement())
+  id        Int         @id   @default(autoincrement() || sequence())
   pid       Int
   pcolor    String
 }

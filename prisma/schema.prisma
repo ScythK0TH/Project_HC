@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "cockroachdb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ model users {
 }
 
 model carts {
-  cid       BigInt         @id   @default(sequence())
+  cid       BigInt         @id   @default(autoincrement())
   id        String
   pid       Int
   pcolor    String
@@ -40,7 +40,7 @@ model products {
 }
 
 model history {
-  id        Int         @id   @default(sequence())
+  id        Int         @id   @default(autoincrement())
   uid       String
   pid       Int
   pcolor    String
@@ -50,7 +50,7 @@ model history {
 }
 
 model product_colors {
-  id        Int         @id   @default(sequence())
+  id        Int         @id   @default(autoincrement())
   pid       Int
   pcolor    String
 }
